@@ -11,6 +11,5 @@ end
 includeShared( "hotloader/logging.lua" )
 includeShared( "hotloader/wraps.lua" )
 includeShared( "hotloader/luarunner.lua" )
-includeShared( "hotloader/autoload.lua" )
 includeShared( "hotloader/gma.lua")
 includeShared( "hotloader/contentstripper.lua")
