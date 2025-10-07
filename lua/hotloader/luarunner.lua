@@ -317,7 +317,6 @@ HotLoad.loadedAddons = HotLoad.loadedAddons or {}
 ---@param done? function
 function HotLoad.LoadAddon( id, done )
     if HotLoad.loadedAddons[id] then
-        HotLoad.logger:Warnf( "Addon %s is already loaded", id )
         if done then done() end
         return
     end
