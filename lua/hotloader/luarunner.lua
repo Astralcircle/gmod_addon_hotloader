@@ -62,7 +62,6 @@ function loadedAddon:Mount( done )
 
             -- try stripping linux prefix and mounting
             if files == false then
-                HotLoad.logger:Infof( "Failed to mount GMA '%s', trying to strip S:/workshop/ prefix", path )
                 local prefix = "S:/workshop/"
                 if string.StartsWith( path, prefix ) then
                     path = string.sub( path, #prefix + 1 )
@@ -73,7 +72,6 @@ function loadedAddon:Mount( done )
 
             -- if it is still failing use the file handle to copy to data  directory
             if files == false then
-                HotLoad.logger:Infof( "File outside of game directory, copying to data directory: %s", path )
                 local newFilename = "workshop_addons/" .. self.id .. ".gma.txt"
                 local dir = string.GetPathFromFilename( newFilename )
                 file.CreateDir( dir )
@@ -104,7 +102,6 @@ function loadedAddon:Mount( done )
             end
 
             if files == false then
-                HotLoad.logger:Errorf( "Failed to mount GMA, exhausted all methods" )
                 done( nil )
                 return
             end
@@ -117,7 +114,6 @@ function loadedAddon:Mount( done )
     else
         local filename = "workshop_addons/" .. self.id .. ".gma"
         if not file.Exists( filename, "DATA" ) then
-            HotLoad.logger:Errorf( "Failed to find GMA '%s'", filename )
             done( nil )
             return
         end
@@ -125,7 +121,6 @@ function loadedAddon:Mount( done )
         self.filename = filename
         HotLoad.StripGMALua( self.id, filename, function( result )
             if not result then
-                HotLoad.logger:Errorf( "Failed to strip GMA '%s'", filename )
                 done( nil )
                 return
             end
@@ -189,11 +184,9 @@ local luaFenvMeta = {
 function loadedAddon:runLua( files )
     for _, filename in pairs( files ) do
         if not self:FileExists( filename ) then
-            HotLoad.logger:Warnf( "Attempted to load file '%s' that was not mounted by the addon loader. Called from %s", filename, callSource )
             return
         end
 
-        HotLoad.logger:Debugf( "Running file '%s'", filename )
         local code = HotLoad.fileContent[filename]
         if not code then
             code = file.Read( filename, "WORKSHOP" )
@@ -214,7 +207,6 @@ function loadedAddon:runLua( files )
         func()
 
         local elapsed = SysTime() - startTime
-        HotLoad.logger:Debugf( "File '%s' took %s seconds to run", filename, elapsed )
 
         HotLoad._hotLoadIncludeLocalPath = oldPath
     end
@@ -223,7 +215,6 @@ end
 function loadedAddon:mountGMA()
     local success, files = game.MountGMA( self.filename )
     if not success or not files then
-        HotLoad.logger:Warnf( "Failed to mount GMA '%s'", self.filename )
         return false
     end
 
@@ -256,7 +247,6 @@ function loadedAddon:analyzeFiles()
         end
     end
     local totalAutorun = #self.autorun.shared + #self.autorun.client + #self.autorun.server
-    HotLoad.logger:Debugf( "Found %s effects, %s entities, %s weapons, %s autorun files", #self.effectNames, #self.entityNames, #self.swepNames, totalAutorun )
 end
 
 function loadedAddon:loadEffects()

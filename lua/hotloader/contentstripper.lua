@@ -14,7 +14,6 @@ function HotLoad.StripGMALua( id, filename, done )
     local GMA = HotLoad.GMA
     local data = GMA.Read( filename )
     if not data then
-        HotLoad.logger:Errorf( "Failed to read GMA '%s'", filename )
         done( nil )
         return
     end
@@ -38,7 +37,6 @@ function HotLoad.StripGMALua( id, filename, done )
     writeDefaultAddonJson( tmpDir, id )
 
     GMA.Create( string.format( "hotload_tmp/%s_ws_content.txt", id ), "data/" .. tmpDir, true, false, function( path )
-        HotLoad.logger:Debugf( "GMA created at '%s'", path )
         done( {
             luaFileNames = files,
             contentGMAPath = path
