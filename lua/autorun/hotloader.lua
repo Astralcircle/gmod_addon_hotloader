@@ -8,7 +8,6 @@ local function includeShared( filename )
 	include( filename )
 end
 
-includeShared( "hotloader/logging.lua" )
 includeShared( "hotloader/wraps.lua" )
 includeShared( "hotloader/luarunner.lua" )
 includeShared( "hotloader/gma.lua")

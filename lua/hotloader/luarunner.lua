@@ -311,3 +311,19 @@ function loadedAddon:loadAutorun()
 end
 
 HotLoad.LoadedAddon = loadedAddon
+HotLoad.loadedAddons = HotLoad.loadedAddons or {}
+
+---@param id string
+---@param done? function
+function HotLoad.LoadAddon( id, done )
+    if HotLoad.loadedAddons[id] then
+        HotLoad.logger:Warnf( "Addon %s is already loaded", id )
+        if done then done() end
+        return
+    end
+
+    local addon = HotLoad.LoadedAddon.New( id )
+    addon:Mount( done )
+
+    HotLoad.loadedAddons[id] = addon
+end
