@@ -1,11 +1,11 @@
 HotLoad = HotLoad or {
-    ---@type table<string, string>
-    fileContent = {},
+	---@type table<string, string>
+	fileContent = {},
 }
 
 local function includeShared( filename )
-    AddCSLuaFile( filename )
-    include( filename )
+	AddCSLuaFile( filename )
+	include( filename )
 end
 
 includeShared( "hotloader/logging.lua" )
