@@ -13,20 +13,8 @@ end
 HotLoad.parseIdentifier = parseIdentifier
 HotLoad.constructIdentifier = constructIdentifier
 
----@class LoadedAddon
----@field id string
----@field files string[]
----@field filename string
----@field swepNames string[]
----@field effectNames string[]
----@field entityNames string[]
----@field autorun {shared: string[], client: string[], server: string[]}
----@field fileLookup table<string, boolean>
----@field wraps table<string, any>
 local loadedAddon = {}
 
----@params id number
----@return LoadedAddon
 function loadedAddon.New( id )
 	local o = {
 		id = id,
@@ -51,7 +39,6 @@ end
 
 local noop = function() end
 
----@param done? fun(loadedAddon)
 function loadedAddon:Mount( done )
 	done = done or noop
 
@@ -313,8 +300,6 @@ end
 HotLoad.LoadedAddon = loadedAddon
 HotLoad.loadedAddons = HotLoad.loadedAddons or {}
 
----@param id string
----@param done? function
 function HotLoad.LoadAddon( id, done )
     if HotLoad.loadedAddons[id] then
         if done then done() end

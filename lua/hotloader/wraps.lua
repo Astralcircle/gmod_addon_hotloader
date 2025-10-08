@@ -8,8 +8,6 @@ local function normalizePath( path )
 	return normalized
 end
 
----@param addon LoadedAddon
----@return table<string, any>
 function HotLoad.GetWraps( addon )
 	local includeOverride = function( filename )
 		local localPath = HotLoad._hotLoadIncludeLocalPath

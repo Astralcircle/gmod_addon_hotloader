@@ -5,11 +5,6 @@ local function writeDefaultAddonJson( dir, id )
 	} ) )
 end
 
----@alias ContentStripperResult { luaFileNames: string[], contentGMAPath: string }
-
----@param id string the id of the workshop item
----@param filename string the filename of the GMA
----@param done fun( content: ContentStripperResult|nil) the callback to call when the content has been stripped
 function HotLoad.StripGMALua( id, filename, done )
 	local GMA = HotLoad.GMA
 	local data = GMA.Read( filename )
